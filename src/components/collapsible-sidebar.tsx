@@ -68,19 +68,30 @@ function ChatSidebar({ onToggle }: { onToggle: () => void }) {
   );
 }
 
-export function CollapsibleSidebar() {
+export interface CollapsibleSidebarProps {
+  onOpenChange?: (isOpen: boolean) => void;
+}
+
+export function CollapsibleSidebar({ onOpenChange }: CollapsibleSidebarProps) {
   const [isOpen, setIsOpen] = useState(true);
 
   // Set initial state based on screen size
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsOpen(window.innerWidth >= 1024); // lg breakpoint
+      const shouldBeOpen = window.innerWidth >= 1024;
+      setIsOpen(shouldBeOpen);
+      onOpenChange?.(shouldBeOpen);
     };
 
     checkScreenSize();
     window.addEventListener("resize", checkScreenSize);
     return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
+  }, [onOpenChange]);
+
+  const handleToggle = (open: boolean) => {
+    setIsOpen(open);
+    onOpenChange?.(open);
+  };
 
   return (
     <>
@@ -90,26 +101,28 @@ export function CollapsibleSidebar() {
           variant="ghost"
           size="icon"
           className="fixed top-4 left-4 z-50"
-          onClick={() => setIsOpen(true)}
+          onClick={() => handleToggle(true)}
         >
           <Menu size={20} />
         </Button>
       )}
 
-      <div
+      <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 transform transition-transform duration-200 ease-in-out lg:relative lg:transform-none",
-          isOpen ? "translate-x-0" : "-translate-x-full"
+          "shrink-0 transition-[width] duration-200 ease-in-out overflow-hidden",
+          isOpen ? "w-64" : "w-0"
         )}
       >
-        <ChatSidebar onToggle={() => setIsOpen(false)} />
-      </div>
+        <div className="w-64">
+          <ChatSidebar onToggle={() => handleToggle(false)} />
+        </div>
+      </aside>
 
       {/* Overlay for mobile */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/20 z-30 lg:hidden"
-          onClick={() => setIsOpen(false)}
+          onClick={() => handleToggle(false)}
         />
       )}
     </>
