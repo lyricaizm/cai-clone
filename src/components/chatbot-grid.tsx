@@ -12,7 +12,7 @@ export function ChatbotGrid() {
       {presets.map((preset) => (
         <div
           key={preset.id}
-          className="border rounded-lg p-6 space-y-4 hover:border-foreground/20 transition-colors"
+          className="border rounded-lg p-6 space-y-4 hover:border-foreground/20 transition-colors max-sm:px-8"
         >
           <h2 className="text-xl font-semibold">{preset.name}</h2>
           <p className="text-sm text-muted-foreground line-clamp-3">

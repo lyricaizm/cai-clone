@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { cn } from "@/lib/utils";
 import { useChatStore } from "@/lib/store";
 import { CreatePresetDialog } from "./create-preset-dialog";
@@ -68,30 +68,23 @@ function ChatSidebar({ onToggle }: { onToggle: () => void }) {
   );
 }
 
-export interface CollapsibleSidebarProps {
-  onOpenChange?: (isOpen: boolean) => void;
-}
-
-export function CollapsibleSidebar({ onOpenChange }: CollapsibleSidebarProps) {
+export function CollapsibleSidebar() {
   const [isOpen, setIsOpen] = useState(true);
 
-  // Set initial state based on screen size
+  const checkScreenSize = useCallback(() => {
+    setIsOpen(window.innerWidth >= 1024);
+  }, []);
+
   useEffect(() => {
-    const checkScreenSize = () => {
-      const shouldBeOpen = window.innerWidth >= 1024;
-      setIsOpen(shouldBeOpen);
-      onOpenChange?.(shouldBeOpen);
-    };
-
+    // Check on mount
     checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
-  }, [onOpenChange]);
 
-  const handleToggle = (open: boolean) => {
-    setIsOpen(open);
-    onOpenChange?.(open);
-  };
+    // Add resize listener
+    window.addEventListener("resize", checkScreenSize);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, [checkScreenSize]);
 
   return (
     <>
@@ -101,28 +94,28 @@ export function CollapsibleSidebar({ onOpenChange }: CollapsibleSidebarProps) {
           variant="ghost"
           size="icon"
           className="fixed top-4 left-4 z-50"
-          onClick={() => handleToggle(true)}
+          onClick={() => setIsOpen(true)}
         >
           <Menu size={20} />
         </Button>
       )}
 
+      {/* Sidebar */}
       <aside
         className={cn(
-          "shrink-0 transition-[width] duration-200 ease-in-out overflow-hidden",
-          isOpen ? "w-64" : "w-0"
+          "fixed lg:static inset-y-0 left-0 z-40 bg-background",
+          "transition-transform duration-200 ease-in-out w-64",
+          isOpen ? "translate-x-0" : "-translate-x-full lg:w-0"
         )}
       >
-        <div className="w-64">
-          <ChatSidebar onToggle={() => handleToggle(false)} />
-        </div>
+        <ChatSidebar onToggle={() => setIsOpen(false)} />
       </aside>
 
       {/* Overlay for mobile */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/20 z-30 lg:hidden"
-          onClick={() => handleToggle(false)}
+          onClick={() => setIsOpen(false)}
         />
       )}
     </>
