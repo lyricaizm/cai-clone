@@ -4,11 +4,16 @@ import { useChat } from "@ai-sdk/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useChatStore } from "@/lib/store";
 
 export function Chat() {
+  const { currentPreset } = useChatStore();
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat({
       api: "/api/chat",
+      body: {
+        systemPrompt: currentPreset?.systemPrompt,
+      },
     });
 
   return (
