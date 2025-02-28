@@ -20,6 +20,7 @@ interface ChatStore {
   addMessage: (message: Message) => void;
   setCurrentPreset: (preset: Preset) => void;
   addPreset: (preset: Preset) => void;
+  clearMessages: () => void;
 }
 
 const defaultPresets: Preset[] = [
@@ -42,6 +43,7 @@ export const useChatStore = create<ChatStore>()(
       setCurrentPreset: (preset) => set({ currentPreset: preset }),
       addPreset: (preset) =>
         set((state) => ({ presets: [...state.presets, preset] })),
+      clearMessages: () => set({ messages: [] }),
     }),
     {
       name: "chat-store",

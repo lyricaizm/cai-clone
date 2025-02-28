@@ -5,16 +5,29 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useChatStore } from "@/lib/store";
+import { useEffect } from "react";
 
 export function Chat() {
   const { currentPreset } = useChatStore();
-  const { messages, input, handleInputChange, handleSubmit, isLoading } =
-    useChat({
-      api: "/api/chat",
-      body: {
-        systemPrompt: currentPreset?.systemPrompt,
-      },
-    });
+
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit,
+    isLoading,
+    setMessages,
+  } = useChat({
+    api: "/api/chat",
+    body: {
+      systemPrompt: currentPreset?.systemPrompt,
+    },
+  });
+
+  // Reset chat when currentPreset changes
+  useEffect(() => {
+    setMessages([]);
+  }, [currentPreset, setMessages]);
 
   return (
     <div className="flex-1 flex flex-col h-screen max-w-4xl mx-auto">

@@ -7,13 +7,15 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 export function ChatSidebar() {
-  const { presets, currentPreset, setCurrentPreset } = useChatStore();
+  const { presets, currentPreset, setCurrentPreset, clearMessages } =
+    useChatStore();
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
   const isHomePage = pathname === "/";
 
   const handlePresetChange = (preset: (typeof presets)[0]) => {
+    clearMessages();
     setCurrentPreset(preset);
     // Create new URLSearchParams object to modify the query
     const params = new URLSearchParams(searchParams);
