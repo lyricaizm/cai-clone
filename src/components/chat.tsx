@@ -41,7 +41,7 @@ export function Chat() {
   }, [currentPreset, setMessages]);
 
   return (
-    <div className="flex-1 flex flex-col h-screen max-w-4xl mx-auto px-4 lg:px-0">
+    <div className="flex-1 flex flex-col max-w-4xl mx-auto px-4 lg:px-0 h-full">
       <ScrollArea className="flex-1 pt-16 lg:pt-4 pb-4">
         <div className="space-y-4">
           {messages.map((message) => (

@@ -111,11 +111,14 @@ export function CollapsibleSidebar() {
       {/* Sidebar */}
       <aside
         className={cn(
+          // Base styles
+          "bg-background w-64",
           // Mobile styles
-          "fixed inset-y-0 left-0 z-40 bg-background w-64",
+          "fixed inset-y-0 left-0 z-40",
+          // Desktop styles
+          "lg:sticky lg:top-0 lg:h-screen lg:block",
           "transition-all duration-200 ease-in-out",
-          "lg:relative lg:transform-none",
-          // Control visibility
+          // Visibility
           isOpen
             ? "translate-x-0"
             : "-translate-x-full lg:w-0 lg:translate-x-0 lg:opacity-0"
