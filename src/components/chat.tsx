@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useChatStore } from "@/lib/store";
 import { useEffect, useRef } from "react";
+import { LoadingDots } from "./loading-dots";
 
 export function Chat() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -61,6 +62,13 @@ export function Chat() {
               </div>
             </div>
           ))}
+          {isLoading && (
+            <div className="flex flex-col items-start">
+              <div className="rounded-lg px-4 py-2 bg-muted">
+                <LoadingDots />
+              </div>
+            </div>
+          )}
           <div ref={messagesEndRef} />
         </div>
       </ScrollArea>
