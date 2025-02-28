@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import { useState, useEffect, useCallback, Suspense } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { cn } from "@/lib/utils";
 import { useChatStore } from "@/lib/store";
 import { CreatePresetDialog } from "./create-preset-dialog";
@@ -10,7 +10,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { SettingsDialog } from "./settings-dialog";
 
-function ChatSidebarContent({ onToggle }: { onToggle: () => void }) {
+function ChatSidebar({ onToggle }: { onToggle: () => void }) {
   const { presets, currentPreset, setCurrentPreset, clearMessages } =
     useChatStore();
   const pathname = usePathname();
@@ -68,14 +68,6 @@ function ChatSidebarContent({ onToggle }: { onToggle: () => void }) {
   );
 }
 
-function ChatSidebar({ onToggle }: { onToggle: () => void }) {
-  return (
-    <Suspense fallback={<div className="w-64 h-screen bg-background" />}>
-      <ChatSidebarContent onToggle={onToggle} />
-    </Suspense>
-  );
-}
-
 export function CollapsibleSidebar() {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -109,15 +101,20 @@ export function CollapsibleSidebar() {
       )}
 
       {/* Sidebar */}
-      <aside
+      <div
         className={cn(
-          "fixed lg:static inset-y-0 left-0 z-40 bg-background",
-          "transition-transform duration-200 ease-in-out w-64",
-          isOpen ? "translate-x-0" : "-translate-x-full lg:w-0"
+          // Mobile styles
+          "fixed inset-y-0 left-0 z-40 bg-background w-64",
+          "transition-all duration-200 ease-in-out",
+          "lg:relative lg:transform-none",
+          // Control visibility
+          isOpen
+            ? "translate-x-0"
+            : "-translate-x-full lg:w-0 lg:translate-x-0 lg:opacity-0"
         )}
       >
         <ChatSidebar onToggle={() => setIsOpen(false)} />
-      </aside>
+      </div>
 
       {/* Overlay for mobile */}
       {isOpen && (
