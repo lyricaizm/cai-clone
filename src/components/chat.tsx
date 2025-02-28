@@ -17,7 +17,7 @@ export function Chat() {
     input,
     handleInputChange,
     handleSubmit,
-    isLoading,
+    status,
     setMessages,
   } = useChat({
     api: "/api/chat",
@@ -62,7 +62,7 @@ export function Chat() {
               </div>
             </div>
           ))}
-          {isLoading && (
+          {status === "submitted" && (
             <div className="flex flex-col items-start">
               <div className="rounded-lg px-4 py-2 bg-muted">
                 <LoadingDots />
@@ -81,9 +81,9 @@ export function Chat() {
           value={input}
           onChange={handleInputChange}
           placeholder="Say something..."
-          disabled={isLoading}
+          disabled={status !== "ready"}
         />
-        <Button type="submit" disabled={isLoading}>
+        <Button type="submit" disabled={status !== "ready"}>
           Send
         </Button>
       </form>
