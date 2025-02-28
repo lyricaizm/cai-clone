@@ -56,7 +56,7 @@ export function Chat() {
 
       <form
         onSubmit={handleSubmit}
-        className="border-t p-4 flex items-center gap-2"
+        className="sticky bottom-0 border-t p-4 flex items-center gap-2 bg-background z-10"
       >
         <Input
           value={input}
