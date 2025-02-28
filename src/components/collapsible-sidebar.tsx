@@ -79,7 +79,11 @@ function ChatSidebar({ onToggle }: { onToggle: () => void }) {
   );
 }
 
-export function CollapsibleSidebar() {
+export function CollapsibleSidebar({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [isOpen, setIsOpen] = useState(true);
 
   const checkScreenSize = useCallback(() => {
@@ -98,7 +102,7 @@ export function CollapsibleSidebar() {
   }, [checkScreenSize]);
 
   return (
-    <>
+    <div className="flex h-screen w-screen">
       {/* Open button - only visible when sidebar is closed */}
       {!isOpen && (
         <Button
@@ -115,20 +119,22 @@ export function CollapsibleSidebar() {
       <aside
         className={cn(
           // Base styles
-          "bg-background w-64",
           // Mobile styles
           "fixed inset-y-0 left-0 z-40",
           // Desktop styles
-          "lg:sticky lg:top-0 lg:h-screen lg:block",
+          "lg:relative lg:block",
           "transition-all duration-200 ease-in-out",
           // Visibility
           isOpen
-            ? "translate-x-0"
-            : "-translate-x-full lg:w-0 lg:translate-x-0 lg:opacity-0"
+            ? "translate-x-0 bg-background w-64 shrink-0"
+            : "-translate-x-64 lg:w-0"
         )}
       >
         <ChatSidebar onToggle={() => setIsOpen(false)} />
       </aside>
+
+      {/* Main content */}
+      <main className="flex-1 overflow-auto w-full">{children}</main>
 
       {/* Overlay for mobile */}
       {isOpen && (
@@ -137,6 +143,6 @@ export function CollapsibleSidebar() {
           onClick={() => setIsOpen(false)}
         />
       )}
-    </>
+    </div>
   );
 }

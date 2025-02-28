@@ -5,6 +5,7 @@ import { useChatStore } from "@/lib/store";
 import { useEffect } from "react";
 import { ChatMessages } from "./chat-messages";
 import { ChatInput } from "./chat-input";
+import { ChatNavbar } from "./chat-navbar";
 
 export function Chat() {
   const { currentPreset } = useChatStore();
@@ -29,14 +30,22 @@ export function Chat() {
   }, [currentPreset, setMessages]);
 
   return (
-    <div className="flex-1 flex flex-col max-w-4xl mx-auto px-4 lg:px-0 h-full">
-      <ChatMessages messages={messages} isLoading={status === "submitted"} />
-      <ChatInput
-        input={input}
-        handleInputChange={handleInputChange}
-        handleSubmit={handleSubmit}
-        isLoading={status !== "ready"}
-      />
+    <div className="flex-1 flex flex-col h-screen">
+      <ChatNavbar />
+      <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col max-w-4xl w-full mx-auto px-4">
+          <ChatMessages
+            messages={messages}
+            isLoading={status === "submitted"}
+          />
+          <ChatInput
+            input={input}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+            isLoading={status !== "ready"}
+          />
+        </div>
+      </div>
     </div>
   );
 }

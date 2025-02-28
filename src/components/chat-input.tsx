@@ -15,19 +15,19 @@ export function ChatInput({
   isLoading,
 }: ChatInputProps) {
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="sticky bottom-0 border-t p-4 flex items-center gap-2 bg-background z-10"
-    >
-      <Input
-        value={input}
-        onChange={handleInputChange}
-        placeholder="Say something..."
-        disabled={isLoading}
-      />
-      <Button type="submit" disabled={isLoading}>
-        Send
-      </Button>
-    </form>
+    <div className="sticky bottom-0 border-t bg-background z-10">
+      <form onSubmit={handleSubmit} className="flex items-center gap-2 p-4">
+        <Input
+          value={input}
+          onChange={handleInputChange}
+          placeholder="Say something..."
+          disabled={isLoading}
+          className="flex-1"
+        />
+        <Button type="submit" disabled={isLoading}>
+          Send
+        </Button>
+      </form>
+    </div>
   );
 }
