@@ -26,12 +26,6 @@ const defaultPresets: Preset[] = [
     systemPrompt: "You are a helpful AI assistant.",
   },
   {
-    id: "code",
-    name: "Code Assistant",
-    systemPrompt:
-      "You are a helpful programming assistant. You help with coding tasks, debugging, and explaining technical concepts.",
-  },
-  {
     id: "ryo",
     name: "Ryo Yamada",
     systemPrompt:
