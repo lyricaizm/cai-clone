@@ -17,6 +17,7 @@ export function CreatePresetDialog() {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [systemPrompt, setSystemPrompt] = useState("");
+  const [description, setDescription] = useState("");
   const { addPreset } = useChatStore();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -29,6 +30,7 @@ export function CreatePresetDialog() {
     addPreset({
       id,
       name,
+      description,
       systemPrompt,
     });
 
@@ -58,6 +60,19 @@ export function CreatePresetDialog() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g., Code Assistant"
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <label htmlFor="description" className="text-sm font-medium">
+              Description
+            </label>
+            <Textarea
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Enter the instructions for your chatbot..."
+              className="h-32"
               required
             />
           </div>

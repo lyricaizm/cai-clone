@@ -9,6 +9,7 @@ export type Message = {
 export type Preset = {
   id: string;
   name: string;
+  description: string | undefined;
   systemPrompt: string;
 };
 
@@ -25,6 +26,7 @@ const defaultPresets: Preset[] = [
   {
     id: "default",
     name: "General Assistant",
+    description: "General assistant for anything.",
     systemPrompt: "You are a helpful AI assistant.",
   },
 ];
