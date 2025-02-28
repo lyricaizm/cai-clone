@@ -4,8 +4,9 @@ import { Chat } from "@/components/chat";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { useChatStore } from "@/lib/store";
+import { Suspense } from "react";
 
-export default function ChatPage() {
+function ChatWithParams() {
   const searchParams = useSearchParams();
   const presetId = searchParams.get("preset");
   const { presets, setCurrentPreset } = useChatStore();
@@ -20,4 +21,12 @@ export default function ChatPage() {
   }, [presetId, presets, setCurrentPreset]);
 
   return <Chat />;
+}
+
+export default function ChatPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ChatWithParams />
+    </Suspense>
+  );
 }
