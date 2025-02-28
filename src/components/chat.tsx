@@ -5,9 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useChatStore } from "@/lib/store";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export function Chat() {
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const { currentPreset } = useChatStore();
 
   const {
@@ -23,6 +24,15 @@ export function Chat() {
       systemPrompt: currentPreset?.systemPrompt,
     },
   });
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Scroll to bottom when messages change
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   // Reset chat when currentPreset changes
   useEffect(() => {
@@ -51,6 +61,7 @@ export function Chat() {
               </div>
             </div>
           ))}
+          <div ref={messagesEndRef} />
         </div>
       </ScrollArea>
 
