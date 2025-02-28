@@ -9,7 +9,7 @@ export type Message = {
 export type Preset = {
   id: string;
   name: string;
-  description: string | undefined;
+  description?: string;
   systemPrompt: string;
 };
 
