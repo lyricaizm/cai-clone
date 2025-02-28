@@ -3,7 +3,7 @@ import { ChatbotGrid } from "@/components/chatbot-grid";
 
 export default function Home() {
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto py-8 max-sm:px-8">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Explore Chatbots</h1>
         <CreatePresetDialog />
