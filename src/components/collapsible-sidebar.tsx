@@ -31,7 +31,10 @@ function ChatSidebarContent({ onToggle }: { onToggle: () => void }) {
   return (
     <div className="w-64 border-r h-screen p-4 flex flex-col">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="font-semibold">Chatbots</h2>
+        <Link href="/">
+          <h2 className="font-semibold">Chatbots</h2>
+        </Link>
+
         <Button variant="ghost" size="icon" onClick={onToggle}>
           <X size={20} />
         </Button>
