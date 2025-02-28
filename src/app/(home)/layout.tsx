@@ -1,4 +1,4 @@
-import { ChatSidebar } from "@/components/chat-sidebar";
+import { CollapsibleSidebar } from "@/components/collapsible-sidebar";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <div className="flex min-h-screen">
-      <ChatSidebar />
+      <CollapsibleSidebar />
       {children}
     </div>
   );
