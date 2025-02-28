@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, Suspense } from "react";
 import { cn } from "@/lib/utils";
 import { useChatStore } from "@/lib/store";
 import { CreatePresetDialog } from "./create-preset-dialog";
@@ -10,7 +10,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { SettingsDialog } from "./settings-dialog";
 
-function ChatSidebar({ onToggle }: { onToggle: () => void }) {
+function ChatSidebarContent({ onToggle }: { onToggle: () => void }) {
   const { presets, currentPreset, setCurrentPreset, clearMessages } =
     useChatStore();
   const pathname = usePathname();
@@ -68,6 +68,14 @@ function ChatSidebar({ onToggle }: { onToggle: () => void }) {
   );
 }
 
+function ChatSidebar({ onToggle }: { onToggle: () => void }) {
+  return (
+    <Suspense fallback={<div className="w-64 h-screen bg-background" />}>
+      <ChatSidebarContent onToggle={onToggle} />
+    </Suspense>
+  );
+}
+
 export function CollapsibleSidebar() {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -101,7 +109,7 @@ export function CollapsibleSidebar() {
       )}
 
       {/* Sidebar */}
-      <div
+      <aside
         className={cn(
           // Mobile styles
           "fixed inset-y-0 left-0 z-40 bg-background w-64",
@@ -114,7 +122,7 @@ export function CollapsibleSidebar() {
         )}
       >
         <ChatSidebar onToggle={() => setIsOpen(false)} />
-      </div>
+      </aside>
 
       {/* Overlay for mobile */}
       {isOpen && (
