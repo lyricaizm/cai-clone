@@ -22,7 +22,7 @@ export function MessageItem({ message }: MessageItemProps) {
         </span>
       )}
       <div
-        className={`rounded-lg px-4 py-2 max-w-[80%] whitespace-pre-wrap ${
+        className={`rounded-lg px-4 py-2 max-w-[80%] whitespace-pre-wrap break-all ${
           message.role === "assistant"
             ? "bg-muted"
             : "bg-primary text-primary-foreground"
