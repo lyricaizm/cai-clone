@@ -17,6 +17,7 @@ export function Chat() {
     handleSubmit,
     status,
     setMessages,
+    stop,
   } = useChat({
     api: "/api/chat",
     body: {
@@ -44,6 +45,8 @@ export function Chat() {
             handleInputChange={handleInputChange}
             handleSubmit={handleSubmit}
             isLoading={status !== "ready"}
+            stop={stop}
+            status={status}
           />
         </div>
       </div>
