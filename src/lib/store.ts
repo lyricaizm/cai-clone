@@ -41,6 +41,7 @@ interface ChatStore {
   clearMessages: () => void;
   selectedModel: (typeof models)[number];
   setSelectedModel: (model: (typeof models)[number]) => void;
+  updatePreset: (id: string, updates: Partial<Preset>) => void;
 }
 
 const defaultPresets: Preset[] = [
@@ -66,6 +67,17 @@ export const useChatStore = create<ChatStore>()(
       clearMessages: () => set({ messages: [] }),
       selectedModel: models[0],
       setSelectedModel: (model) => set({ selectedModel: model }),
+      updatePreset: (id, updates) =>
+        set((state) => ({
+          presets: state.presets.map((preset) =>
+            preset.id === id ? { ...preset, ...updates } : preset
+          ),
+          // Update currentPreset if it's being edited
+          currentPreset:
+            state.currentPreset?.id === id
+              ? { ...state.currentPreset, ...updates }
+              : state.currentPreset,
+        })),
     }),
     {
       name: "chat-store",
