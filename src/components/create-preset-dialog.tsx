@@ -46,11 +46,11 @@ export function CreatePresetDialog() {
           Create New Chatbot
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-w-2xl">
         <DialogHeader>
           <DialogTitle>Create New Chatbot</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 w-full">
           <div className="space-y-2">
             <label htmlFor="name" className="text-sm font-medium">
               Name
@@ -61,6 +61,7 @@ export function CreatePresetDialog() {
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g., Code Assistant"
               required
+              maxLength={50}
             />
           </div>
           <div className="space-y-2">
@@ -71,8 +72,9 @@ export function CreatePresetDialog() {
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Enter the instructions for your chatbot..."
-              className="h-32"
+              placeholder="Optional description for your chatbot..."
+              className="h-20 resize-none overflow-y-auto break-all"
+              maxLength={500}
             />
           </div>
           <div className="space-y-2">
@@ -84,8 +86,9 @@ export function CreatePresetDialog() {
               value={systemPrompt}
               onChange={(e) => setSystemPrompt(e.target.value)}
               placeholder="Enter the instructions for your chatbot..."
-              className="h-32"
+              className="h-32 resize-none break-all"
               required
+              maxLength={32000}
             />
           </div>
           <Button type="submit" className="w-full">
