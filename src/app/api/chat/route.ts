@@ -14,6 +14,14 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "No system prompt" }, { status: 400 });
   }
 
+  // Validate model ID to ensure it's a free model
+  if (!model.endsWith(":free")) {
+    return NextResponse.json(
+      { error: "Invalid model. Only free models are allowed." },
+      { status: 403 }
+    );
+  }
+
   const result = streamText({
     model: ai(model),
     messages: [
