@@ -73,7 +73,6 @@ export function CreatePresetDialog() {
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Enter the instructions for your chatbot..."
               className="h-32"
-              required
             />
           </div>
           <div className="space-y-2">
