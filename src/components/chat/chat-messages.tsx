@@ -1,8 +1,8 @@
 import { Message } from "ai";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useEffect, useRef } from "react";
-import { LoadingDots } from "./loading-dots";
-import { MessageItem } from "./message-item";
+import { LoadingDots } from "../loading-dots";
+import { MessageItem } from "../message-item";
 
 interface ChatMessagesProps {
   messages: Message[];

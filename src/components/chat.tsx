@@ -3,12 +3,12 @@
 import { useChat } from "@ai-sdk/react";
 import { useChatStore } from "@/lib/store";
 import { useEffect } from "react";
-import { ChatMessages } from "./chat-messages";
-import { ChatInput } from "./chat-input";
-import { ChatNavbar } from "./chat-navbar";
+import { ChatMessages } from "./chat/chat-messages";
+import { ChatInput } from "./chat/chat-input";
+import { ChatNavbar } from "./chat/chat-navbar";
 
 export function Chat() {
-  const { currentPreset } = useChatStore();
+  const { currentPreset, selectedModel } = useChatStore();
 
   const {
     messages,
@@ -21,6 +21,7 @@ export function Chat() {
     api: "/api/chat",
     body: {
       systemPrompt: currentPreset?.systemPrompt,
+      model: selectedModel.model,
     },
   });
 
