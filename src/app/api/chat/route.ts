@@ -8,25 +8,18 @@ export const maxDuration = 30;
 export const runtime = "edge";
 
 export async function POST(req: Request) {
-  const { messages, systemPrompt } = await req.json();
+  const { messages, systemPrompt, model } = await req.json();
 
   if (!systemPrompt) {
-    return NextResponse.json(
-      {
-        error: "No system prompt",
-      },
-      {
-        status: 400,
-      }
-    );
+    return NextResponse.json({ error: "No system prompt" }, { status: 400 });
   }
 
   const result = streamText({
-    model: ai("cognitivecomputations/dolphin3.0-mistral-24b:free"),
+    model: ai(model),
     messages: [
       {
         role: "system",
-        content: systemPrompt || "You are a helpful AI assistant.",
+        content: systemPrompt,
       },
       ...messages,
     ],

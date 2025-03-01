@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -11,6 +12,7 @@ import {
 import { Settings } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { useTheme } from "next-themes";
+import { models, useChatStore } from "@/lib/store";
 import {
   Select,
   SelectContent,
@@ -21,6 +23,7 @@ import {
 
 export function SettingsDialog() {
   const { theme, setTheme } = useTheme();
+  const { selectedModel, setSelectedModel } = useChatStore();
 
   return (
     <Dialog>
@@ -37,8 +40,30 @@ export function SettingsDialog() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
+          <DialogDescription>Configure your chat settings</DialogDescription>
         </DialogHeader>
         <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <label className="text-sm font-medium">Base Model</label>
+            <Select
+              value={selectedModel.id}
+              onValueChange={(value) => {
+                const model = models.find((m) => m.id === value);
+                if (model) setSelectedModel(model);
+              }}
+            >
+              <SelectTrigger className="w-56">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {models.map((model) => (
+                  <SelectItem key={model.id} value={model.id}>
+                    {model.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
           <div className="flex items-center justify-between">
             <Label htmlFor="theme">Theme</Label>
             <Select value={theme} onValueChange={setTheme}>

@@ -13,6 +13,24 @@ export type Preset = {
   systemPrompt: string;
 };
 
+export const models = [
+  {
+    id: "gemini",
+    name: "Gemini 2.0 Flash Lite",
+    model: "google/gemini-2.0-flash-lite-preview-02-05:free",
+  },
+  {
+    id: "dolphin",
+    name: "Dolphin 3.0 Mistral",
+    model: "cognitivecomputations/dolphin3.0-mistral-24b:free",
+  },
+  {
+    id: "mistral",
+    name: "Mistral Nemo",
+    model: "mistralai/mistral-nemo:free",
+  },
+] as const;
+
 interface ChatStore {
   messages: Message[];
   presets: Preset[];
@@ -21,6 +39,8 @@ interface ChatStore {
   setCurrentPreset: (preset: Preset) => void;
   addPreset: (preset: Preset) => void;
   clearMessages: () => void;
+  selectedModel: (typeof models)[number];
+  setSelectedModel: (model: (typeof models)[number]) => void;
 }
 
 const defaultPresets: Preset[] = [
@@ -44,6 +64,8 @@ export const useChatStore = create<ChatStore>()(
       addPreset: (preset) =>
         set((state) => ({ presets: [...state.presets, preset] })),
       clearMessages: () => set({ messages: [] }),
+      selectedModel: models[0],
+      setSelectedModel: (model) => set({ selectedModel: model }),
     }),
     {
       name: "chat-store",
